@@ -1,17 +1,22 @@
 from datetime import datetime
 
 
-def dec(func):
-    def wrapper():
-        start = datetime.now()
-        res = func()
-        print(datetime.now() - start)
-        return res
+def dec(arg):
+    print(arg)
 
-    return wrapper
+    def outer(func):
+        def wrapper(*args, **kwargs):
+            start = datetime.now()
+            res = func(*args, **kwargs)
+            print(datetime.now() - start)
+            return res
+
+        return wrapper
+
+    return outer
 
 
-@dec
+@dec('name')
 def one(n, p):
     l = []
     for i in range(n):
@@ -19,7 +24,8 @@ def one(n, p):
             l.append(i)
     return l
 
-@dec
+
+@dec('name')
 def two(n, p, h, k):
     l = []
     for i in range(n):
@@ -27,5 +33,4 @@ def two(n, p, h, k):
             l.append(i)
     return l
 
-
-one()
+# one(10, 2)
