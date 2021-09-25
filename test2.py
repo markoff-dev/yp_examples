@@ -1,37 +1,30 @@
-def cache3(func):
-    cache = {'count': 0, 'res': None}
+# подсчёт максимального размера строки Python в вашей среде
+# Внимание!!! данный скрипт съест всё вашу память!
 
-    def exe():
-        if 1 <= cache['count'] < 3:
-            cache['count'] += 1
-            return cache['res']
+def create1k():
+    s = ""
+    for i in range(1024):
+        s += '*'
+    return s
 
-        cache['count'] = 1
-        cache['res'] = func()
-        return cache['res']
+def create1m():
+    s = ""
+    x = create1k()
+    for i in range(1024):
+        s += x
+    return s
 
-    return exe
+def create1g():
+    s = ""
+    x = create1m()
+    for i in range(1024):
+        s += x
+    return s
 
-
-@cache3
-def heavy():
-    print('Сложные вычисления')
-    return 1
-
-
-print(heavy())
-# Сложные вычисления
-# 1
-print(heavy())
-# 1
-print(heavy())
-# 1
-
-# Опять кеш устарел, надо вычислять заново
-print(heavy())
-# Сложные вычисления
-# 1
-
-print(heavy())
-print(heavy())
-print(heavy())
+print("begin")
+s = ""
+x = create1g()
+for i in range(1024):
+    s += x
+    print(str(i) + "g ok")
+    print(str(len(s)) + ' bytes')
